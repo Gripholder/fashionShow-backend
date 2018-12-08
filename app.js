@@ -10,7 +10,7 @@ app.get('/', (req, res, next) => {
 })
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 server.listen(port);
 console.log('App listening at port: ' + port);
 
@@ -23,14 +23,18 @@ let dresses = [{
 let ratingList = [[]]
 
 const averageRating = id => {
-  console.log('idily' + id)
-  let result = 0;
-  for (let i = 0; i < ratingList[id].length; i++) {
-    result += ratingList[id][i]
-  }
-  result = result / ratingList[id].length
-  console.log('average Rating ' + result)
-  return Math.round(result)
+  console.log('rating id' + id)
+  console.log(ratingList)
+    let result = 0;
+    for (let i = 0; i < ratingList[id].length; i++) {
+      if(ratingList[id][i] != 0){
+        result += ratingList[id][i]
+      }
+      }
+      result = result / ratingList[id].length
+      console.log('average Rating ' + result)
+      return Math.round(result)
+
 }
 
 io.on('connection', client => {
@@ -50,22 +54,27 @@ io.on('connection', client => {
   })
 
   client.on('Submit Rating', data => {
-    ratingList[data[0]].push(data[1])
+    if(ratingList[data[0]]){
+      ratingList[data[0]].push(data[1])
+    } else {
+      console.log('rating not available')
+    }
     let rate = averageRating(data[0])
     client.broadcast.emit('Rating', rate)
     client.emit('Rating', rate)
   })
 
   client.on('Get Rating', id => {
+    let avgRating = averageRating(id)
     console.log('sending rating' + id)
-    console.log('getting rating average ' + averageRating(id))
-    if(averageRating(id) == NaN){
+    console.log('getting rating average ' + avgRating)
+    console.log('ratings: ' + ratingList)
+    if(avgRating == NaN){
       client.emit('Rating', 0)
     } else {
-      client.emit('Rating', averageRating(id))
+      client.emit('Rating', avgRating)
     }
   })
-
 
   client.on('subscribeToDress', data => {
     client.emit('dress', dresses)
