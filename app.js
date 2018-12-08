@@ -15,10 +15,9 @@ server.listen(port);
 console.log('App listening at port: ' + port);
 
 let dresses = [{
-        id: 0,
-        name: 'yellow dress',
+        name: 'Sample',
         image: 'https://connaisseurparis.com/wp-content/uploads/2018/08/D61A7128-291D-43D6-9809-8ED7E3FB07A1-682x1024-266x400.jpeg',
-        description: 'no sure dress'
+        description: 'Sample'
       }]
 
 let ratingList = [[]]
@@ -35,14 +34,11 @@ const averageRating = id => {
 }
 
 io.on('connection', client => {
-  console.log('Client connected...' + client);
+  console.log('Client connected...' + client.handshake.address);
   client.emit('Welcome', 'hello')
 
   client.on('Dress', data => {
-    console.log('creating rating')
-    console.log(ratingList);
     ratingList.push([])
-    console.log(ratingList);
     if(data != dresses[dresses.length - 1]){
       client.broadcast.emit('Dress', data)
     }
@@ -71,11 +67,9 @@ io.on('connection', client => {
   })
 
 
-  client.on('subscribeToDress', (interval) => {
-    console.log('client is subscribing to timer with interval ', interval);
+  client.on('subscribeToDress', data => {
     client.emit('dress', dresses)
   });
-
 
   client.on('Next Dress', data => {
     client.broadcast.emit('Next Dress', data)
