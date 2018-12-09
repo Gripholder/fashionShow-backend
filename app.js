@@ -14,11 +14,7 @@ const port = process.env.PORT || 3001;
 server.listen(port);
 console.log('App listening at port: ' + port);
 
-let dresses = [{
-        name: '',
-        image: 'https://i.ibb.co/R4M55xw/live-Show-Placeholder.png',
-        url: '#'
-      }]
+let dresses = []
 
 let ratingList = [[]]
 
