@@ -15,9 +15,9 @@ server.listen(port);
 console.log('App listening at port: ' + port);
 
 let dresses = [{
-        name: 'Sample',
-        image: 'https://connaisseurparis.com/wp-content/uploads/2018/08/D61A7128-291D-43D6-9809-8ED7E3FB07A1-682x1024-266x400.jpeg',
-        description: 'Sample'
+        name: '',
+        image: 'https://ibb.co/n8VWWHJ',
+        url: '#'
       }]
 
 let ratingList = [[]]
