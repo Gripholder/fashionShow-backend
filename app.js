@@ -16,7 +16,7 @@ console.log('App listening at port: ' + port);
 
 let dresses = [{
         name: '',
-        image: 'https://ibb.co/n8VWWHJ',
+        image: 'https://i.ibb.co/R4M55xw/live-Show-Placeholder.png',
         url: '#'
       }]
 
